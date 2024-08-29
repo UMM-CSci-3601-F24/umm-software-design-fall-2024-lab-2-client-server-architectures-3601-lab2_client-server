@@ -92,7 +92,7 @@ public class UserDatabase {
    * @return an array of all the users from the given list that have the target
    *         age
    */
-  public User[] filterUsersByAge(User[] users, int targetAge) {
+  public User[] filterUsersByAge(User[] users, int targetAge) {private
     return Arrays.stream(users).filter(x -> x.age == targetAge).toArray(User[]::new);
   }
 
