@@ -270,4 +270,23 @@ public class UserControllerSpec {
     });
     assertEquals("No user with id " + null + " was found.", exception.getMessage());
   }
+
+  @Test
+  public void cangetTodosbyID() throws IOException {
+    // A specific user ID known to be in the "database".
+    String id = "588935f5c668650dc77df581";
+    // Get the user associated with that ID.
+     Todos todo = db.getTodos(id);
+
+    when(ctx.pathParam("id")).thenReturn(id);
+
+    todoController.getTodos(ctx);
+
+    verify(ctx).json(todo);
+    verify(ctx).status(HttpStatus.OK);
+  }
+
+
+
 }
+

@@ -301,44 +301,44 @@ Canvas on the assignment for this lab.
 these tools. Don't just tell us _what_ something does, indicate
 _why_ we'd want to have it.
 
-- [ ] :question: _1_ What is the purpose of `.gitignore`?
+- [x] :question: _1_ What is the purpose of `.gitignore`?
       ([Maybe search for `.gitignore`?](https://www.google.com/search?q=.gitignore))
 
-- [ ] :question: _2_ What role is Gradle playing in the
+- [x] :question: _2_ What role is Gradle playing in the
       project, and what is the purpose of `build.gradle`?
 
-- [ ] :question: _3_ What is the purpose of Github Actions?
+- [x] :question: _3_ What is the purpose of Github Actions?
 
-- [ ] :question: _4_ Explain what an _endpoint_ is (also often called a _route_). (You might look at the
+- [x] :question: _4_ Explain what an _endpoint_ is (also often called a _route_). (You might look at the
       [Javalin](https://javalin.io/documentation#endpoint-handlers)
       documentation for some help here.)
 
-- [ ] :question: _5_ What is the purpose of `umm3601.Server` class?
+- [x] :question: _5_ What is the purpose of `umm3601.Server` class?
       What is the purpose of the `umm3601.user.UserController` class?
       Explain what happens when a user accesses each of the
       following URLs:
 
-  - [ ] :question: The page `users`
+  - [x] :question: The page `users`
     - <http://localhost:4567/users.html>
-  - [ ] :question: The page `api/users`
+  - [x] :question: The page `api/users`
     - <http://localhost:4567/api/users>
-  - [ ] :question: The page `api/users?age=25`
+  - [x] :question: The page `api/users?age=25`
     - <http://localhost:4567/api/users?age=25>
-  - [ ] :question: The page `api/users/588935f5de613130e931ffd5`
+  - [x] :question: The page `api/users/588935f5de613130e931ffd5`
     - <http://localhost:4567/api/users/588935f5de613130e931ffd5>
 
 :bangbang: If you have your project running (see the README), these links should
 actually work and generate results from your server.
 
-- [ ] :question: _6_ What is in the `client` folder? What is the purpose of each of the HTML files there?
+- [x] :question: _6_ What is in the `client` folder? What is the purpose of each of the HTML files there?
 
-- [ ] :question: _7_ Describe what happens when you filter users by
+- [x] :question: _7_ Describe what happens when you filter users by
       age in the client?
 
-  - [ ] What information is read from the web page, and where is it read from?
-  - [ ] What request is sent to the server?
-  - [ ] What reply does the server send back to the client? How is that constructed?
-  - [ ] What is received by the client, and how/where is it displayed?
+  - [x] What information is read from the web page, and where is it read from?
+  - [x] What request is sent to the server?
+  - [x] What reply does the server send back to the client? How is that constructed?
+  - [x] What is received by the client, and how/where is it displayed?
 
-- [ ] :question: _8_ Where is the client-side JavaScript defined? Name the HTML file(s) that
+- [x] :question: _8_ Where is the client-side JavaScript defined? Name the HTML file(s) that
       load and use it.
