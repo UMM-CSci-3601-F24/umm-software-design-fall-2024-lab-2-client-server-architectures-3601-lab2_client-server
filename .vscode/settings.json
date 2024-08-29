@@ -1,0 +1,17 @@
+{
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.server.launchMode": "Standard",
+    "cSpell.words": [
+        "automagically",
+        "bangbang",
+        "Checkstyle",
+        "classpath",
+        "gradlew",
+        "jacoco",
+        "Javalin",
+        "LABTASKS",
+        "NIQUENT",
+        "OHMNET",
+        "todos"
+    ]
+}
