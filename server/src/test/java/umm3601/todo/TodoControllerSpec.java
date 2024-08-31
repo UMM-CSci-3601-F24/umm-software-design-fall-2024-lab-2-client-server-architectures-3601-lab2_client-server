@@ -88,7 +88,7 @@ public class TodoControllerSpec {
     // A specific user ID known to be in the "database".
     String id = "588935f5c668650dc77df581";
     // Get the user associated with that ID.
-    Todo todo = db.getTodos(id);
+    Todo todo = db.getTodosByID(id);
 
     when(ctx.pathParam("id")).thenReturn(id);
 

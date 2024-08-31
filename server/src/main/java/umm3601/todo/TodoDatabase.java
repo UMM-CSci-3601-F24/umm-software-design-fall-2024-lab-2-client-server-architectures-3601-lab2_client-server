@@ -44,6 +44,11 @@ public class TodoDatabase {
     return allTodos.length;
   }
 
+  public Todo[] getTodos() {
+    return Arrays.stream(allTodos).toArray(Todo[]::new);
+    // return Arrays.stream(Todos).filter(x -> x.category.equals(targetCategory)).toArray(Todo[]::new);
+  }
+
   /**
    * Get the single user specified by the given ID. Return `null` if there is no
    * user with that ID.
@@ -51,49 +56,54 @@ public class TodoDatabase {
    * @param id the ID of the desired user
    * @return the user with the given ID, or null if there is no user with that ID
    */
-  public Todo getTodos(String id) {
+  public Todo getTodosByID(String id) {
     return Arrays.stream(allTodos).filter(x -> x._id.equals(id)).findFirst().orElse(null);
   }
 
   /**
    * Get an array of all the users satisfying the queries in the params.
-   *
+   *age
    * @param queryParams map of key-value pairs for the query
    * @return an array of all the users matching the given criteria
    */
   public Todo[] listTodos(Map<String, List<String>> queryParams) {
     Todo[] filteredTodos = allTodos;
 
-    // Filter age if defined
-    if (queryParams.containsKey("age")) {
-      String ageParam = queryParams.get("age").get(0);
+    // Filter owner if defined
+    if (queryParams.containsKey("owner")) {
+      String ownerParam = queryParams.get("owner").get(0);
       try {
-        int targetAge = Integer.parseInt(ageParam);
-        filteredTodos = filterTodosByAge(filteredTodos, targetAge);
+        String targetOwner = queryParams.get("owner").get(0); //int.parseInt(ownerParam);
+        filteredTodos = filterTodosByOwner(filteredTodos, targetOwner);
       } catch (NumberFormatException e) {
-        throw new BadRequestResponse("Specified age '" + ageParam + "' can't be parsed to an integer");
+        throw new BadRequestResponse("Specified owner '" + ownerParam + "' can't be parsed to a String");
       }
     }
-    // Filter company if defined
-    if (queryParams.containsKey("company")) {
-      String targetCompany = queryParams.get("company").get(0);
-      filteredTodos = filterTodosByCompany(filteredTodos, targetCompany);
+    // Filter category if defined
+    if (queryParams.containsKey("category")) {
+      String targetCategory = queryParams.get("category").get(0);
+      filteredTodos = filterTodosByCategory(filteredTodos, targetCategory);
+    }
+    //filter status if defined
+    if(queryParams.containsKey("status")){
+      boolean targetStatus = Boolean.valueOf(queryParams.get("status").get(0));
+      filteredTodos = filterTodosByStatus(filteredTodos, targetStatus);
     }
     // Process other query parameters here... get todos
     return filteredTodos;
   }
 
   /**
-   * Get an array of all the users having the target age.
+   * Get an array of all the todos with the correct status.
    *
-   * @param users     the list of users to filter by age
-   * @param targetAge the target age to look for
-   * @return an array of all the users from the given list that have the target
-   *         age
+   * @param todos     the list of todos to filter by status
+   * @param targetAge the desired status
+   * @return an array of all the todos from the given list that have the target
+   *         status
    */
-  public Todo[] filterTodosByAge(Todo[] Todos, int targetAge) {
-    return Arrays.stream(Todos).filter(x -> x.age == targetAge).toArray(Todo[]::new);
-  }
+    public Todo[] filterTodosByStatus(Todo[] Todos, boolean targetStatus) {
+      return Arrays.stream(Todos).filter(x -> x.status == targetStatus).toArray(Todo[]::new);
+    }
 
   /**
    * Get an array of all the users having the target company.
@@ -103,8 +113,13 @@ public class TodoDatabase {
    * @return an array of all the users from the given list that have the target
    *         company
    */
-  public Todo[] filterTodosByCompany(Todo[] Todos, String targetCompany) {
-    return Arrays.stream(Todos).filter(x -> x.company.equals(targetCompany)).toArray(Todo[]::new);
+  public Todo[] filterTodosByCategory(Todo[] Todos, String targetCategory) {
+    return Arrays.stream(Todos).filter(x -> x.category.equals(targetCategory)).toArray(Todo[]::new);
+  }
+
+  // filter by owner
+  public Todo[] filterTodosByOwner(Todo[] Todos, String targetOwner){
+    return Arrays.stream(Todos).filter(x -> x.owner.equals(targetOwner)).toArray(Todo[]::new);
   }
 
 }

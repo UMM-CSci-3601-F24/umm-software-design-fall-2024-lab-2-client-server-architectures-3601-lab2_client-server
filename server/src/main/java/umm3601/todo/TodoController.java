@@ -26,9 +26,9 @@ public class TodoController implements Controller{
     return todoController;
   }
 
-  public void getTodos(Context ctx) {
+  public void getTodosByID(Context ctx) {
     String id = ctx.pathParam("id");
-    Todo todos = todoDatabase.getTodos(id);
+    Todo todos = todoDatabase.getTodosByID(id);
     if (todos != null) {
       ctx.json(todos);
       ctx.status(HttpStatus.OK);
@@ -37,14 +37,14 @@ public class TodoController implements Controller{
     }
   }
 
-public void getUsers(Context ctx) {
+public void getTodos(Context ctx) {
     Todo[] todos = todoDatabase.listTodos(ctx.queryParamMap());
     ctx.json(todos);
   }
 
 @Override
   public void addRoutes(Javalin server) {
-    server.get("api/todos/{id}",this::getTodos);
+    server.get("api/todos/{id}",this::getTodosByID);
     server.get("/api/todos", this::getTodos);
   }
 }

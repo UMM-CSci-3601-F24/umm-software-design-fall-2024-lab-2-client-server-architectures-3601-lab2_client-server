@@ -2,7 +2,7 @@ package umm3601.todos;
 
 
 @SuppressWarnings({"VisibilityModifier"})
-public class Todo {
+public class Todos {
   @SuppressWarnings({"MemberName"})
   public String _id;
   public String name;
