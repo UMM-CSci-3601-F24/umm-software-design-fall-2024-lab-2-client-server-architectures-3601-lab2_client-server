@@ -1,4 +1,4 @@
-package umm3601.todos;
+package umm3601.todo;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,11 +19,11 @@ import io.javalin.http.BadRequestResponse;
  * then provide various database-like methods that allow the `UserController` to
  * "query" the "database".
  */
-public class TodosDatabase {
+public class TodoDatabase {
 
-  private Todos[] allTodos;
+  private Todo[] allTodos;
 
-  public TodosDatabase(String todosDataFile) throws IOException {
+  public TodoDatabase(String todosDataFile) throws IOException {
     // The `.getResourceAsStream` method searches for the given resource in
     // the classpath, and returns `null` if it isn't found. We want to throw
     // an IOException if the data file isn't found, so we need to check for
@@ -37,7 +37,7 @@ public class TodosDatabase {
     // objects.
     ObjectMapper objectMapper = new ObjectMapper();
     // Read our user data file into an array of User objects.
-    allTodos = objectMapper.readValue(reader, Todos[].class);
+    allTodos = objectMapper.readValue(reader, Todo[].class);
   }
 
   public int size() {
@@ -51,7 +51,7 @@ public class TodosDatabase {
    * @param id the ID of the desired user
    * @return the user with the given ID, or null if there is no user with that ID
    */
-  public Todos getTodos(String id) {
+  public Todo getTodos(String id) {
     return Arrays.stream(allTodos).filter(x -> x._id.equals(id)).findFirst().orElse(null);
   }
 
@@ -61,8 +61,8 @@ public class TodosDatabase {
    * @param queryParams map of key-value pairs for the query
    * @return an array of all the users matching the given criteria
    */
-  public Todos[] listTodos(Map<String, List<String>> queryParams) {
-    Todos[] filteredTodos = allTodos;
+  public Todo[] listTodos(Map<String, List<String>> queryParams) {
+    Todo[] filteredTodos = allTodos;
 
     // Filter age if defined
     if (queryParams.containsKey("age")) {
@@ -79,8 +79,7 @@ public class TodosDatabase {
       String targetCompany = queryParams.get("company").get(0);
       filteredTodos = filterTodosByCompany(filteredTodos, targetCompany);
     }
-    // Process other query parameters here...
-
+    // Process other query parameters here... get todos
     return filteredTodos;
   }
 
@@ -92,8 +91,8 @@ public class TodosDatabase {
    * @return an array of all the users from the given list that have the target
    *         age
    */
-  public Todos[] filterTodosByAge(Todos[] Todos, int targetAge) {
-    return Arrays.stream(Todos).filter(x -> x.age == targetAge).toArray(Todos[]::new);
+  public Todo[] filterTodosByAge(Todo[] Todos, int targetAge) {
+    return Arrays.stream(Todos).filter(x -> x.age == targetAge).toArray(Todo[]::new);
   }
 
   /**
@@ -104,8 +103,8 @@ public class TodosDatabase {
    * @return an array of all the users from the given list that have the target
    *         company
    */
-  public Todos[] filterTodosByCompany(Todos[] Todos, String targetCompany) {
-    return Arrays.stream(Todos).filter(x -> x.company.equals(targetCompany)).toArray(Todos[]::new);
+  public Todo[] filterTodosByCompany(Todo[] Todos, String targetCompany) {
+    return Arrays.stream(Todos).filter(x -> x.company.equals(targetCompany)).toArray(Todo[]::new);
   }
 
 }
