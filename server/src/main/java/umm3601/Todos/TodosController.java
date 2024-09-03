@@ -13,7 +13,7 @@ import umm3601.Controller;
  */
 public class UserController implements Controller {
 
-  private TodosDatabase userDatabase;
+  private UserDatabase userDatabase;
 
   /**
    * Construct a controller for users.
@@ -24,7 +24,7 @@ public class UserController implements Controller {
    *
    * @param database the `Database` containing user data
    */
-  public UserController(TodosDatabase userDatabase) {
+  public UserController(UserDatabase userDatabase) {
     this.userDatabase = userDatabase;
   }
 
@@ -41,7 +41,7 @@ public class UserController implements Controller {
   public static UserController buildUserController(String userDataFile) throws IOException {
     UserController userController = null;
 
-    TodosDatabase userDatabase = new TodosDatabase(userDataFile);
+    UserDatabase userDatabase = new UserDatabase(userDataFile);
     userController = new UserController(userDatabase);
 
     return userController;
