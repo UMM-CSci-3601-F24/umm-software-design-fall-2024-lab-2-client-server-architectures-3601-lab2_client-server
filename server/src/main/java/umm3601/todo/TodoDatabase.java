@@ -9,13 +9,13 @@ import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import io.javalin.http.BadRequestResponse;
+// import io.javalin.http.BadRequestResponse;
 
 public class TodoDatabase {
 
-  public Todo[] allTodos;
+  private Todo[] allTodos;
 
-  public TodoDatabase(String todoDataFile) throws IOException{
+  public TodoDatabase(String todoDataFile) throws IOException {
 
     InputStream resourseAsStream = getClass().getResourceAsStream(todoDataFile);
     if (resourseAsStream == null) {
@@ -43,15 +43,13 @@ public class TodoDatabase {
     if (queryParamMap.containsKey("owner")) {
       String ownerParam = queryParamMap.get("owner").get(0);
       String targetOwner = ownerParam;
-      filteredTodos = filterUsersByOwner(filteredTodos, targetOwner);
+      filteredTodos = filterTodosByOwner(filteredTodos, targetOwner);
     }
 
     return filteredTodos;
   }
 
-  public Todo[] filterUsersByOwner(Todo[] todos, String targetOwner) {
-    // TODO Auto-generated method stub
-    // throw new UnsupportedOperationException("Unimplemented method 'filterUsersByOwner'");
+  public Todo[] filterTodosByOwner(Todo[] todos, String targetOwner) {
     return Arrays.stream(todos).filter(x -> x.owner == targetOwner).toArray(Todo[]::new);
   }
 
