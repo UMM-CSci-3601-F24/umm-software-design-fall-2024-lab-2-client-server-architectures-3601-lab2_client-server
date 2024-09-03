@@ -33,7 +33,26 @@ public class TodoDatabase {
    * @param id
    * @return
    */
-  public Todo geTodo(String id) {
+  public Todo getTodo(String id) {
     return Arrays.stream(allTodos).filter(x -> x._id.equals(id)).findFirst().orElse(null);
   }
+
+  public Todo[] listTodos(Map<String, List<String>> queryParamMap) {
+    Todo[] filteredTodos = allTodos;
+
+    if (queryParamMap.containsKey("owner")) {
+      String ownerParam = queryParamMap.get("owner").get(0);
+      String targetOwner = ownerParam;
+      filteredTodos = filterUsersByOwner(filteredTodos, targetOwner);
+    }
+
+    return filteredTodos;
+  }
+
+  public Todo[] filterUsersByOwner(Todo[] todos, String targetOwner) {
+    // TODO Auto-generated method stub
+    // throw new UnsupportedOperationException("Unimplemented method 'filterUsersByOwner'");
+    return Arrays.stream(todos).filter(x -> x.owner == targetOwner).toArray(Todo[]::new);
+  }
+
 }

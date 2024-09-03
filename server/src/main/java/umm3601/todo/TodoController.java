@@ -16,7 +16,7 @@ public class TodoController implements Controller {
   private TodoDatabase todoDatabase;
 
   /**
-   * @param databse
+   * @param database
    */
   public TodoController(TodoDatabase todoDatabase) {
     this.todoDatabase = todoDatabase;
@@ -29,15 +29,12 @@ public class TodoController implements Controller {
     TodoController todoController = null;
 
     TodoDatabase todoDatabase = new TodoDatabase(todoDataFile);
-    todoController = new todoController(todoDatabase);
+    todoController = new TodoController(todoDatabase);
 
     return todoController;
 
   }
 
-  /**
-   * @param ctx
-   */
   public void getTodo(Context ctx) {
     String id = ctx.pathParam("id");
     Todo todo = todoDatabase.getTodo(id);
@@ -45,7 +42,7 @@ public class TodoController implements Controller {
       ctx.json(todo);
       ctx.status(HttpStatus.OK);
     } else {
-      throw new NotFoundResponse("Notodo with id " + id + " was found.");
+      throw new NotFoundResponse("No todo with id " + id + " was found.");
     }
   }
 
@@ -57,16 +54,11 @@ public class TodoController implements Controller {
     ctx.json(todos);
   }
 
-  /**
-   * @param server
-   */
   @Override
   public void addRoutes(Javalin server) {
     server.get("/api/todos/{id}", this::getTodo);
     server.get("/api/todos", this::getTodos);
   }
-
-
 }
 
 
