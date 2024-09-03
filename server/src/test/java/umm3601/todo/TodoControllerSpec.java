@@ -7,11 +7,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -27,18 +24,17 @@ import io.javalin.http.NotFoundResponse;
 import umm3601.Main;
 
 
-
 public class TodoControllerSpec {
 
   private TodoController todoController;
+
   private static TodoDatabase db;
 
   @Mock
   private Context ctx;
 
   @Captor
-  private ArgumentCaptor<Todo[]> todoArrayCaptor;
-
+  private ArgumentCaptor<Todo[]> userArrayCaptor;
 
   @BeforeEach
   public void setUp() throws IOException {
@@ -58,7 +54,7 @@ public class TodoControllerSpec {
 
   @Test
   public void buildControllerFailsWithIllegalDbFile() {
-    assertThrows(IOException.class, () -> {
+    Assertions.assertThrows(IOException.class, () -> {
       TodoController.buildTodoController("Legal file name 100%");
     });
   }
@@ -66,8 +62,8 @@ public class TodoControllerSpec {
   @Test
   public void canGetAllTodos() throws IOException {
     todoController.getTodos(ctx);
-    verify(ctx).json(todoArrayCaptor.capture());
-    assertEquals(db.size(), todoArrayCaptor.getValue().length);
+    verify(ctx).json(userArrayCaptor.capture());
+    assertEquals(db.size(), userArrayCaptor.getValue().length);
   }
 
 
@@ -92,12 +88,12 @@ public class TodoControllerSpec {
 
     assertThrows(NotFoundResponse.class, () -> todoController.getTodo(ctx));
 
-    Throwable exception = assertThrows(NotFoundResponse.class, () -> {
+    Throwable exception = Assertions.assertThrows(NotFoundResponse.class, () -> {
       todoController.getTodo(ctx);
     });
     assertEquals("No todo with id " + null + " was found.", exception.getMessage());
-
   }
+}
 
   @Test
   @SuppressWarnings({ "MagicNumber" })
@@ -116,4 +112,3 @@ public class TodoControllerSpec {
     assertEquals(61, todoArrayCaptor.getValue().length);
    }
 }
-

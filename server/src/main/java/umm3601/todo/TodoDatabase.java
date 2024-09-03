@@ -8,20 +8,17 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-// import io.javalin.http.BadRequestResponse;
-
 public class TodoDatabase {
 
   private Todo[] allTodos;
 
   public TodoDatabase(String todoDataFile) throws IOException {
 
-    InputStream resourseAsStream = getClass().getResourceAsStream(todoDataFile);
-    if (resourseAsStream == null) {
+    InputStream resourceAsStream = getClass().getResourceAsStream(todoDataFile);
+    if (resourceAsStream == null) {
       throw new IOException("Could not find " + todoDataFile);
     }
-    InputStreamReader reader = new InputStreamReader(resourseAsStream);
+    InputStreamReader reader = new InputStreamReader(resourceAsStream);
     ObjectMapper objectMapper = new ObjectMapper();
     allTodos = objectMapper.readValue(reader, Todo[].class);
   }
@@ -44,14 +41,13 @@ public class TodoDatabase {
       String ownerParam = queryParamMap.get("owner").get(0);
       String targetOwner = ownerParam;
       filteredTodos = filterTodosByOwner(filteredTodos, targetOwner);
-      System.out.println(filteredTodos);
     }
 
     return filteredTodos;
   }
 
   public Todo[] filterTodosByOwner(Todo[] todos, String targetOwner) {
-    return Arrays.stream(todos).filter(x -> x.owner.equals(targetOwner)).toArray(Todo[]::new);
+    return Arrays.stream(todos).filter(x -> x.owner == targetOwner).toArray(Todo[]::new);
   }
 
 }

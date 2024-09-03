@@ -1,8 +1,6 @@
 package umm3601.todo;
-@SuppressWarnings({"VisibilityModifier"})
-public class Todo {
-
-
+  @SuppressWarnings({"VisibilityModifier"})
+  public class Todo {
 
     @SuppressWarnings({"MemberName"})
     public String _id;

@@ -45,7 +45,6 @@ public class TodoController implements Controller {
       throw new NotFoundResponse("No todo with id " + id + " was found.");
     }
   }
-
   /**
    * @param ctx
    */
@@ -53,7 +52,10 @@ public class TodoController implements Controller {
     Todo[] todos = todoDatabase.listTodos(ctx.queryParamMap());
     ctx.json(todos);
   }
-
+  
+  /**
+   * @param server
+   */
   @Override
   public void addRoutes(Javalin server) {
     server.get("/api/todos/{id}", this::getTodo);
