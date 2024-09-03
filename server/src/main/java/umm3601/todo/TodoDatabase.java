@@ -3,6 +3,7 @@ package umm3601.todo;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +58,21 @@ public class TodoDatabase {
 
   public Todo[] filterTodosByStatus(Todo[] todos, Boolean targetStatus) {
 
-    return Arrays.stream(todos).filter(x -> x.status == targetStatus).toArray(Todo[]::new);
+    Todo[] = new Array<>;
+
+    for i in Array[]; {
+      if (Array[i] == true) {
+      Array[i] = "complete";
+      }
+      else if (Array[i] == false) {
+        Array[i] = "incomplete";
+      }
+      else return ThrowExeption;
   }
+
+  // public Todo[] filterTodosByCatagory(Todo[] todos, Boolean targetCatagory) {
+
+  //   return Arrays.stream(todos).filter(x -> x.status == targetCatagory).toArray(Todo[]::new);
+  // }
 
 }

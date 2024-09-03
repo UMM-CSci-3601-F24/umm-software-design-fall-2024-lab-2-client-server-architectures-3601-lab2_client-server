@@ -1,9 +1,14 @@
 package umm3601.user;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -55,5 +60,12 @@ public class TodoControllerSpec {
     assertEquals(db.size(), todoArrayCaptor.getValue().length);
   }
 
+
+
+  @Test
+  public void canFilterStatusTodos() throws IOException {
+
+    todoController.getTodos(ctx);
+  }
 
 }
