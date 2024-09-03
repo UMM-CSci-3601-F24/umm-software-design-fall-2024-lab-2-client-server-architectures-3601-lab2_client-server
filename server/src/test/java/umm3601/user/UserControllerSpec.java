@@ -271,4 +271,3 @@ public class UserControllerSpec {
     assertEquals("No user with id " + null + " was found.", exception.getMessage());
   }
 }
-

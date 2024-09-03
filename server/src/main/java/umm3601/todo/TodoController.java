@@ -42,9 +42,43 @@ public void getTodos(Context ctx) {
     ctx.json(todos);
   }
 
+// public void getTodosByBody(Context ctx)
+
+
+
+public void getTodosByStatus(Context ctx) {
+  Boolean status = null;
+  if(ctx.pathParam("status").equals("incomplete")){
+    status = false;
+  } else if (ctx.pathParam("status").equals("complete")){
+      status = true;
+  }
+  Todo[] todos = todoDatabase.filterTodosByStatus(status);
+  if (todos != null) {
+    ctx.json(todos);
+    ctx.status(HttpStatus.OK);
+  } else {
+    throw new NotFoundResponse("No todo with status " + status + "was found.");
+  }
+}
+
+public void filterTodosByOwner(Context ctx) {
+	String owner = ctx.pathParam("owner");
+    Todo[] todos = todoDatabase.filterTodosByOwner(owner);
+    if (todos != null) {
+      ctx.json(todos);
+      ctx.status(HttpStatus.OK);
+    } else {
+      throw new NotFoundResponse("No todo with owner " + owner + " was found.");
+    }
+}
+
 @Override
   public void addRoutes(Javalin server) {
     server.get("api/todos/{id}",this::getTodosByID);
     server.get("/api/todos", this::getTodos);
+    //server.get("/api/todos?owner=Blanche", this::filterTodosByOwner);
+    //server.get("/api/todos?status=complete", this::getTodosByStatus);
+    // server.get("/api/todos?category=groceries", this::filterTodosByCategory);
   }
 }
