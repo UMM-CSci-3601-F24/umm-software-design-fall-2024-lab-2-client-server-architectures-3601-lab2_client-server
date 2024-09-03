@@ -44,13 +44,14 @@ public class TodoDatabase {
       String ownerParam = queryParamMap.get("owner").get(0);
       String targetOwner = ownerParam;
       filteredTodos = filterTodosByOwner(filteredTodos, targetOwner);
+      System.out.println(filteredTodos);
     }
 
     return filteredTodos;
   }
 
   public Todo[] filterTodosByOwner(Todo[] todos, String targetOwner) {
-    return Arrays.stream(todos).filter(x -> x.owner == targetOwner).toArray(Todo[]::new);
+    return Arrays.stream(todos).filter(x -> x.owner.equals(targetOwner)).toArray(Todo[]::new);
   }
 
 }
