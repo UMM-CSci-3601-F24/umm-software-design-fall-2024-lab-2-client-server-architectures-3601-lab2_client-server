@@ -9,19 +9,17 @@ import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import io.javalin.http.BadRequestResponse;
-
 public class TodoDatabase {
 
-  public Todo[] allTodos;
+  private Todo[] allTodos;
 
-  public TodoDatabase(String todoDataFile) throws IOException{
+  public TodoDatabase(String todoDataFile) throws IOException {
 
-    InputStream resourseAsStream = getClass().getResourceAsStream(todoDataFile);
-    if (resourseAsStream == null) {
+    InputStream resourceAsStream = getClass().getResourceAsStream(todoDataFile);
+    if (resourceAsStream == null) {
       throw new IOException("Could not find " + todoDataFile);
     }
-    InputStreamReader reader = new InputStreamReader(resourseAsStream);
+    InputStreamReader reader = new InputStreamReader(resourceAsStream);
     ObjectMapper objectMapper = new ObjectMapper();
     allTodos = objectMapper.readValue(reader, Todo[].class);
   }
@@ -29,11 +27,25 @@ public class TodoDatabase {
   public int size() {
     return allTodos.length;
   }
-  /**
-   * @param id
-   * @return
-   */
-  public Todo geTodo(String id) {
+
+  public Todo getTodo(String id) {
     return Arrays.stream(allTodos).filter(x -> x._id.equals(id)).findFirst().orElse(null);
   }
+
+  public Todo[] listTodos(Map<String, List<String>> queryParamMap) {
+    Todo[] filteredTodos = allTodos;
+
+    if (queryParamMap.containsKey("owner")) {
+      String ownerParam = queryParamMap.get("owner").get(0);
+      String targetOwner = ownerParam;
+      filteredTodos = filterTodosByOwner(filteredTodos, targetOwner);
+    }
+
+    return filteredTodos;
+  }
+
+  public Todo[] filterTodosByOwner(Todo[] todos, String targetOwner) {
+    return Arrays.stream(todos).filter(x -> x.owner == targetOwner).toArray(Todo[]::new);
+  }
+
 }
