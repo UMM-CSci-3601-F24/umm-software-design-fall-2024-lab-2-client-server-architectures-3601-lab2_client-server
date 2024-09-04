@@ -16,7 +16,7 @@ public class TodoController implements Controller {
   private TodoDatabase todoDatabase;
 
   /**
-   * @param databse
+   * @param database
    */
   public TodoController(TodoDatabase todoDatabase) {
     this.todoDatabase = todoDatabase;
@@ -29,7 +29,7 @@ public class TodoController implements Controller {
     TodoController todoController = null;
 
     TodoDatabase todoDatabase = new TodoDatabase(todoDataFile);
-    todoController = new todoController(todoDatabase);
+    todoController = new TodoController(todoDatabase);
 
     return todoController;
 
@@ -45,10 +45,9 @@ public class TodoController implements Controller {
       ctx.json(todo);
       ctx.status(HttpStatus.OK);
     } else {
-      throw new NotFoundResponse("Notodo with id " + id + " was found.");
+      throw new NotFoundResponse("No todo with id " + id + " was found.");
     }
   }
-
   /**
    * @param ctx
    */
@@ -56,6 +55,7 @@ public class TodoController implements Controller {
     Todo[] todos = todoDatabase.listTodos(ctx.queryParamMap());
     ctx.json(todos);
   }
+
 
   /**
    * @param server
@@ -65,8 +65,6 @@ public class TodoController implements Controller {
     server.get("/api/todos/{id}", this::getTodo);
     server.get("/api/todos", this::getTodos);
   }
-
-
 }
 
 
