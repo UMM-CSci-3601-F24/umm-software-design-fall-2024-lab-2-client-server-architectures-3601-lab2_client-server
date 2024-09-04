@@ -56,6 +56,30 @@ public class TodoControllerSpec {
   verify(mockServer, Mockito.atLeast(2)).get(any(), any());
 }
 
+@Test
+public void buildControllerFailsWithIllegalDbFile() {
+  Assertions.assertThrows(IOException.class, () -> {
+    todoController.buildUserController("this is not a legal file name");
+  });
+}
+
+
+@Test
+  public void canGetAllTodos() throws IOException {
+    todoController.getTodos(ctx);
+    verify(ctx).json(todoArrayCaptor.capture());
+    assertEquals(db.size(), todoArrayCaptor.getValue().length);
+  }
+
+  @Test
+  public void canGetCertainID() throws IOException {
+
+
+
+
+
+}
+
 
 
 }

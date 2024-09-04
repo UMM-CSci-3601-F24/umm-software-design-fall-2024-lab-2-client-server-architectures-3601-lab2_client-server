@@ -9,10 +9,10 @@ import umm3601.Controller;
 
 public class TodoController implements Controller {
 
-  private TodoDatabase TodoDatabase;
+  private TodoDatabase todoDatabase;
 
   public TodoController(TodoDatabase todoDatabase) {
-    this.TodoDatabase = todoDatabase;
+    this.todoDatabase = todoDatabase;
   }
 
   public static TodoController buildTodoController(String todoDataFile) throws IOException {
@@ -23,6 +23,7 @@ public class TodoController implements Controller {
 
     return todoController;
   }
+
 
   public void getTodos(Context ctx) {
     Todo[] todos = TodoDatabase.listTodos(ctx.queryParamMap());
