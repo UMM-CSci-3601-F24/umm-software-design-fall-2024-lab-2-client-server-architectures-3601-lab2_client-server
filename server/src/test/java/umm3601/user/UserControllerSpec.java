@@ -47,7 +47,7 @@ public class UserControllerSpec {
   private UserController userController;
   // An instance of our database "layer" that is prepared in
   // `setupEach()`, and then used in the tests below.
-  private static TodosDatabase db;
+  private static UserDatabase db;
 
   // A "fake" version of Javalin's `Context` object that we can
   // use to test with.
@@ -73,7 +73,7 @@ public class UserControllerSpec {
     // (declared above with Mockito annotations @Mock and @Captor)
     MockitoAnnotations.openMocks(this);
     // Construct our "database"
-    db = new TodosDatabase(Main.USER_DATA_FILE);
+    db = new UserDatabase(Main.USER_DATA_FILE);
     // Construct an instance of our controller which
     // we'll then test.
     userController = new UserController(db);

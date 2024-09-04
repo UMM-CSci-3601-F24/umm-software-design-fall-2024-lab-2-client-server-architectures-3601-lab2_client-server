@@ -27,7 +27,7 @@ public class UserDatabase {
     // The `.getResourceAsStream` method searches for the given resource in
     // the classpath, and returns `null` if it isn't found. We want to throw
     // an IOException if the data file isn't found, so we need to check for
-    // `null` ourselves, and throw an IOException if necessary.
+    // `null` ourselves, and throw an IOException if necessary. todo
     InputStream resourceAsStream = getClass().getResourceAsStream(userDataFile);
     if (resourceAsStream == null) {
       throw new IOException("Could not find " + userDataFile);

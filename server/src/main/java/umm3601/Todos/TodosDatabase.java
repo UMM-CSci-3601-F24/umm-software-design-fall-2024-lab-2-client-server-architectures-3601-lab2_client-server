@@ -19,11 +19,11 @@ import io.javalin.http.BadRequestResponse;
  * then provide various database-like methods that allow the `UserController` to
  * "query" the "database".
  */
-public class UserDatabase {
+public class TodoDatabase {
 
-  private User[] allUsers;
+  private Todo[] allUsers;
 
-  public UserDatabase(String userDataFile) throws IOException {
+  public TodoDatabase(String userDataFile) throws IOException {
     // The `.getResourceAsStream` method searches for the given resource in
     // the classpath, and returns `null` if it isn't found. We want to throw
     // an IOException if the data file isn't found, so we need to check for
@@ -51,9 +51,9 @@ public class UserDatabase {
    * @param id the ID of the desired user
    * @return the user with the given ID, or null if there is no user with that ID
    */
-  public User getUser(String id) {
-    return Arrays.stream(allUsers).filter(x -> x._id.equals(id)).findFirst().orElse(null);
-  }
+  // public User getUser(String id) {
+  //   return Arrays.stream(allUsers).filter(x -> x._id.equals(id)).findFirst().orElse(null);
+  // }
 
   /**
    * Get an array of all the users satisfying the queries in the params.
@@ -84,28 +84,28 @@ public class UserDatabase {
     return filteredUsers;
   }
 
-  /**
-   * Get an array of all the users having the target age.
-   *
-   * @param users     the list of users to filter by age
-   * @param targetAge the target age to look for
-   * @return an array of all the users from the given list that have the target
-   *         age
-   */
-  public User[] filterUsersByAge(User[] users, int targetAge) {
-    return Arrays.stream(users).filter(x -> x.age == targetAge).toArray(User[]::new);
-  }
+  // /**
+  //  * Get an array of all the users having the target age.
+  //  *
+  //  * @param users     the list of users to filter by age
+  //  * @param targetAge the target age to look for
+  //  * @return an array of all the users from the given list that have the target
+  //  *         age
+  //  */
+  // public User[] filterUsersByAge(User[] users, int targetAge) {
+  //   return Arrays.stream(users).filter(x -> x.age == targetAge).toArray(User[]::new);
+  // }
 
-  /**
-   * Get an array of all the users having the target company.
-   *
-   * @param users         the list of users to filter by company
-   * @param targetCompany the target company to look for
-   * @return an array of all the users from the given list that have the target
-   *         company
-   */
-  public User[] filterUsersByCompany(User[] users, String targetCompany) {
-    return Arrays.stream(users).filter(x -> x.company.equals(targetCompany)).toArray(User[]::new);
-  }
+  // /**
+  //  * Get an array of all the users having the target company.
+  //  *
+  //  * @param users         the list of users to filter by company
+  //  * @param targetCompany the target company to look for
+  //  * @return an array of all the users from the given list that have the target
+  //  *         company
+  //  */
+  // public User[] filterUsersByCompany(User[] users, String targetCompany) {
+  //   return Arrays.stream(users).filter(x -> x.company.equals(targetCompany)).toArray(User[]::new);
+  // }
 
 }

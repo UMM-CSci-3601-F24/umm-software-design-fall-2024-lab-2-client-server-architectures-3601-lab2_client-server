@@ -13,7 +13,7 @@ import umm3601.Controller;
  */
 public class UserController implements Controller {
 
-  private TodosDatabase userDatabase;
+  private UserDatabase userDatabase;
 
   /**
    * Construct a controller for users.
@@ -22,9 +22,9 @@ public class UserController implements Controller {
    * internally so that (subsets of) users can be returned in response to
    * requests.
    *
-   * @param database the `Database` containing user data
+   *@param database the `Database` containing user data
    */
-  public UserController(TodosDatabase userDatabase) {
+  public UserController(UserDatabase userDatabase) {
     this.userDatabase = userDatabase;
   }
 
@@ -41,7 +41,7 @@ public class UserController implements Controller {
   public static UserController buildUserController(String userDataFile) throws IOException {
     UserController userController = null;
 
-    TodosDatabase userDatabase = new TodosDatabase(userDataFile);
+    UserDatabase userDatabase = new UserDatabase(userDataFile);
     userController = new UserController(userDatabase);
 
     return userController;
@@ -49,7 +49,7 @@ public class UserController implements Controller {
 
   /**
    * Get the single user specified by the `id` parameter in the request.
-   *
+   *todo
    * @param ctx a Javalin HTTP context
    */
   public void getUser(Context ctx) {
