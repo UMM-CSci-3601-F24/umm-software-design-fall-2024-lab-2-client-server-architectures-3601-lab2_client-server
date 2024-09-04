@@ -52,6 +52,7 @@ public class TodoDatabase {
       filteredTodos = filterTodosByStatus(filteredTodos, false);
       }
     }
+
     return filteredTodos;
   }
 
