@@ -50,9 +50,9 @@ public class TodoDatabase {
       filteredTodos = filterTodosByStatus(filteredTodos, true);
       } else {
       filteredTodos = filterTodosByStatus(filteredTodos, false);
-      }
-
+      }  
     }
+    
     return filteredTodos;
   }
 
