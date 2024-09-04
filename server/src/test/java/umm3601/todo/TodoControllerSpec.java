@@ -128,4 +128,14 @@ public class TodoControllerSpec {
     }
     assertEquals(61, todoArrayCaptor.getValue().length);
    }
+
+  @Test
+  public void canFilterCategoryTodos() throws IOException {
+    Map<String, List<String>> queryParams = new HashMap<>();
+    queryParams.put("category", Arrays.asList(new String[] {"software design"}));
+    when(ctx.queryParamMap()).thenReturn(queryParams);
+
+    todoController.getTodos(ctx);
+    verify(ctx).json(todoArrayCaptor.capture());
+  }
 }
