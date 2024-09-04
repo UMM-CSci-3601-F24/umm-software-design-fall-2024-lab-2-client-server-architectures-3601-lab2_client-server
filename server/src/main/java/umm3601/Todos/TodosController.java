@@ -13,7 +13,7 @@ import umm3601.Controller;
  */
 public class UserController implements Controller {
 
-  private TodoDatabase userDatabase;
+  private UserDatabase userDatabase;
 
   /**
    * Construct a controller for users.
@@ -24,7 +24,7 @@ public class UserController implements Controller {
    *
    * @param database the `Database` containing user data
    */
-  public UserController(TodoDatabase userDatabase) {
+  public UserController(UserDatabase userDatabase) {
     this.userDatabase = userDatabase;
   }
 
@@ -41,27 +41,27 @@ public class UserController implements Controller {
   public static UserController buildUserController(String userDataFile) throws IOException {
     UserController userController = null;
 
-    TodoDatabase userDatabase = new TodoDatabase(userDataFile);
+    UserDatabase userDatabase = new UserDatabase(userDataFile);
     userController = new UserController(userDatabase);
 
     return userController;
   }
 
-  // /**
-  //  * Get the single user specified by the `id` parameter in the request.
-  //  *
-  //  * @param ctx a Javalin HTTP context
-  //  */
-  // public void getUser(Context ctx) {
-  //   String id = ctx.pathParam("id");
-  //   User user = userDatabase.getUser(id);
-  //   if (user != null) {
-  //     ctx.json(user);
-  //     ctx.status(HttpStatus.OK);
-  //   } else {
-  //     throw new NotFoundResponse("No user with id " + id + " was found.");
-  //   }
-  // }
+  /**
+   * Get the single user specified by the `id` parameter in the request.
+   *
+   * @param ctx a Javalin HTTP context
+   */
+  public void getUser(Context ctx) {
+    String id = ctx.pathParam("id");
+    User user = userDatabase.getUser(id);
+    if (user != null) {
+      ctx.json(user);
+      ctx.status(HttpStatus.OK);
+    } else {
+      throw new NotFoundResponse("No user with id " + id + " was found.");
+    }
+  }
 
   /**
    * Get a JSON response with a list of all the users in the "database".
@@ -95,7 +95,7 @@ public class UserController implements Controller {
   @Override
   public void addRoutes(Javalin server) {
     // Get specific user
-    // server.get("/api/users/{id}", this::getUser);
+    server.get("/api/users/{id}", this::getUser);
 
     // List users, filtered using query parameters
     server.get("/api/users", this::getUsers);
