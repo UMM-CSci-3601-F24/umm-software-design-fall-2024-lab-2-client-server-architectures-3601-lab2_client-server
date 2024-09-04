@@ -40,8 +40,12 @@ public class TodoDatabase {
 
     if (queryParamMap.containsKey("owner")) {
       String ownerParam = queryParamMap.get("owner").get(0);
-      String targetOwner = ownerParam;
-      filteredTodos = filterTodosByOwner(filteredTodos, targetOwner);
+      filteredTodos = filterTodosByOwner(filteredTodos, ownerParam);
+    }
+
+    if (queryParamMap.containsKey("category")) {
+      String ownerParam = queryParamMap.get("category").get(0);
+      filteredTodos = filterTodosByCategory(filteredTodos, ownerParam);
     }
 
     if (queryParamMap.containsKey("status")) {
@@ -62,6 +66,10 @@ public class TodoDatabase {
 
   public Todo[] filterTodosByStatus(Todo[] todos, Boolean targetStatus) {
     return Arrays.stream(todos).filter(x -> x.status == targetStatus).toArray(Todo[]::new);
+  }
+
+  public Todo[] filterTodosByCategory(Todo[] todos, String targetCategory) {
+    return Arrays.stream(todos).filter(x -> x.category.equals(targetCategory)).toArray(Todo[]::new);
   }
 
 }
