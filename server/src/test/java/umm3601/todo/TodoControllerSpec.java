@@ -1,6 +1,7 @@
 package umm3601.todo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -11,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -21,7 +21,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import io.javalin.Javalin;
-import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
 import io.javalin.http.NotFoundResponse;
@@ -49,21 +48,59 @@ public class TodoControllerSpec {
   }
 
   @Test
-  public void canGetTodo() throws IOException {
-    db.getTodo("58895985186754887e0381f5");
-    verify(ctx).json(todoArrayCaptor.capture());
-    assertEquals(db.size(), todoArrayCaptor.getValue().length);
+  public void canBuildController() throws IOException {
+
+    TodoController controller = TodoController.buildTodoController(Main.TODO_DATA_FILE);
+    Javalin mockServer = Mockito.mock(Javalin.class);
+    controller.addRoutes(mockServer);
+    verify(mockServer, Mockito.atLeast(2)).get(any(), any());
   }
 
+  @Test
+  public void buildControllerFailsWithIllegalDbFile() {
+    assertThrows(IOException.class, () -> {
+      TodoController.buildTodoController("Legal file name 100%");
+    });
+  }
 
   @Test
-  public void canGetTodos() throws IOException {
+  public void canGetAllTodos() throws IOException {
     todoController.getTodos(ctx);
     verify(ctx).json(todoArrayCaptor.capture());
     assertEquals(db.size(), todoArrayCaptor.getValue().length);
   }
 
+
   @Test
+  public void canGetTodoWithSpecifiedId() {
+
+    String id = "58895985a22c04e761776d54";
+    Todo todo = db.getTodo(id);
+    when(ctx.pathParam("id")).thenReturn(id);
+
+    todoController.getTodo(ctx);
+
+    verify(ctx).json(todo);
+    verify(ctx).status(HttpStatus.OK);
+  }
+
+  @Test
+  public void canGetTodoWithInvalidId() {
+
+    String id = null;
+    when(ctx.pathParam("id")).thenReturn(id);
+
+    assertThrows(NotFoundResponse.class, () -> todoController.getTodo(ctx));
+
+    Throwable exception = assertThrows(NotFoundResponse.class, () -> {
+      todoController.getTodo(ctx);
+    });
+    assertEquals("No todo with id " + null + " was found.", exception.getMessage());
+
+  }
+
+  @Test
+  @SuppressWarnings({ "MagicNumber" })
   public void canFilterTodosByOwner() throws IOException {
     Map<String, List<String>> queryParams = new HashMap<>();
     queryParams.put("owner", Arrays.asList(new String[] {"Fry"}));
