@@ -31,7 +31,7 @@ public class TodoDatabase {
    * @param id
    * @return
    */
-  public Todo geTodo(String id) {
+  public Todo getTodo(String id) {
     return Arrays.stream(allTodos).filter(x -> x._id.equals(id)).findFirst().orElse(null);
   }
 
@@ -56,7 +56,7 @@ public class TodoDatabase {
   }
 
   public Todo[] filterTodosByOwner(Todo[] todos, String targetOwner) {
-    return Arrays.stream(todos).filter(x -> x.owner == targetOwner).toArray(Todo[]::new);
+    return Arrays.stream(todos).filter(x -> x.owner.equals(targetOwner)).toArray(Todo[]::new);
   }
 
   public Todo[] filterTodosByStatus(Todo[] todos, Boolean targetStatus) {

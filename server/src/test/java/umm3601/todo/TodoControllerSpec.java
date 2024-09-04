@@ -112,7 +112,6 @@ public class TodoControllerSpec {
       assertEquals(true, todo.status);
     }
   }
-}
 
   @Test
   @SuppressWarnings({ "MagicNumber" })
