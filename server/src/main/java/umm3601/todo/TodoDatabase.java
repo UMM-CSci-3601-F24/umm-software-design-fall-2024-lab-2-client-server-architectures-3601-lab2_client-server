@@ -43,8 +43,8 @@ public class TodoDatabase {
 
     if (queryParamMap.containsKey("owner")) {
       String ownerParam = queryParamMap.get("owner").get(0);
-      filteredTodos = filterTodosByOwner(filteredTodos, ownerParam);
-
+      String targetOwner = ownerParam;
+      filteredTodos = filterTodosByOwner(filteredTodos, targetOwner);
     }
 
     if (queryParamMap.containsKey("status")) {
