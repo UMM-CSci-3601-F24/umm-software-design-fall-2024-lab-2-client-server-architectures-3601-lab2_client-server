@@ -3,26 +3,23 @@ package umm3601.todo;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import io.javalin.http.BadRequestResponse;
-
 public class TodoDatabase {
 
-  public Todo[] allTodos;
+  private Todo[] allTodos;
 
-  public TodoDatabase(String todoDataFile) throws IOException{
+  public TodoDatabase(String todoDataFile) throws IOException {
 
-    InputStream resourseAsStream = getClass().getResourceAsStream(todoDataFile);
-    if (resourseAsStream == null) {
+    InputStream resourceAsStream = getClass().getResourceAsStream(todoDataFile);
+    if (resourceAsStream == null) {
       throw new IOException("Could not find " + todoDataFile);
     }
-    InputStreamReader reader = new InputStreamReader(resourseAsStream);
+    InputStreamReader reader = new InputStreamReader(resourceAsStream);
     ObjectMapper objectMapper = new ObjectMapper();
     allTodos = objectMapper.readValue(reader, Todo[].class);
   }
@@ -51,8 +48,7 @@ public class TodoDatabase {
       String statusParam = queryParamMap.get("status").get(0);
       if (statusParam.equals("complete")) {
       filteredTodos = filterTodosByStatus(filteredTodos, true);
-      }
-      else {
+      } else {
       filteredTodos = filterTodosByStatus(filteredTodos, false);
       }
 
@@ -61,13 +57,10 @@ public class TodoDatabase {
   }
 
   public Todo[] filterTodosByOwner(Todo[] todos, String targetOwner) {
-    // TODO Auto-generated method stub
-    // throw new UnsupportedOperationException("Unimplemented method 'filterUsersByOwner'");
-    return Arrays.stream(todos).filter(x -> x.owner == targetOwner).toArray(Todo[]::new);
+    return Arrays.stream(todos).filter(x -> x.owner.equals(targetOwner)).toArray(Todo[]::new);
   }
 
   public Todo[] filterTodosByStatus(Todo[] todos, Boolean targetStatus) {
-
     return Arrays.stream(todos).filter(x -> x.status == targetStatus).toArray(Todo[]::new);
   }
 
