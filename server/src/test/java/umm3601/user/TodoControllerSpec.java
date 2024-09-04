@@ -64,8 +64,24 @@ public class TodoControllerSpec {
 
   @Test
   public void canFilterStatusTodos() throws IOException {
+    Map<String, List<String>> queryParams = new HashMap<>();
+    queryParams.put("status", Arrays.asList(new String[] {"complete"}));
+    when(ctx.queryParamMap()).thenReturn(queryParams);
 
     todoController.getTodos(ctx);
+    verify(ctx).json(todoArrayCaptor.capture());
+    for (Todo todo : todoArrayCaptor.getValue()) {
+      assertEquals(true, todo.status);
+    }
   }
 
+  @Test
+  public void canFilterStatusTodo() throws IOException {
+    db.getTodo("58895985186754887e0381f5");
+    verify(ctx).json(todoArrayCaptor.capture());
+    for (Todo todo : todoArrayCaptor.getValue()) {
+      assertEquals(true, todo.status);
+    }
+    assertEquals(1, todoArrayCaptor.getValue().length);
+  }
 }
