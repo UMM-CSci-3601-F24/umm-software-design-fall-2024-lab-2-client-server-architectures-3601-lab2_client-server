@@ -43,11 +43,23 @@ public class TodoDatabase {
       filteredTodos = filterTodosByOwner(filteredTodos, targetOwner);
     }
 
+    if (queryParamMap.containsKey("status")) {
+      String statusParam = queryParamMap.get("status").get(0);
+      if (statusParam.equals("complete")) {
+      filteredTodos = filterTodosByStatus(filteredTodos, true);
+      } else {
+      filteredTodos = filterTodosByStatus(filteredTodos, false);
+      }
+    }
     return filteredTodos;
   }
 
   public Todo[] filterTodosByOwner(Todo[] todos, String targetOwner) {
     return Arrays.stream(todos).filter(x -> x.owner == targetOwner).toArray(Todo[]::new);
+  }
+
+  public Todo[] filterTodosByStatus(Todo[] todos, Boolean targetStatus) {
+    return Arrays.stream(todos).filter(x -> x.status == targetStatus).toArray(Todo[]::new);
   }
 
 }
