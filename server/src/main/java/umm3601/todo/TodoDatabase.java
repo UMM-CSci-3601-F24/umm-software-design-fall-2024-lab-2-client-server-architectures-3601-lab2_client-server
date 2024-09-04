@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class TodoDatabase {
 
   private Todo[] allTodos;
@@ -30,7 +31,7 @@ public class TodoDatabase {
    * @param id
    * @return
    */
-  public Todo getTodo(String id) {
+  public Todo geTodo(String id) {
     return Arrays.stream(allTodos).filter(x -> x._id.equals(id)).findFirst().orElse(null);
   }
 

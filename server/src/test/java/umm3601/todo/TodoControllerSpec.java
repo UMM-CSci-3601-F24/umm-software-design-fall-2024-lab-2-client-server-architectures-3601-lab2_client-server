@@ -97,21 +97,23 @@ public class TodoControllerSpec {
       todoController.getTodo(ctx);
     });
     assertEquals("No todo with id " + null + " was found.", exception.getMessage());
+
   }
-}
 
   @Test
   public void canFilterStatusTodos() throws IOException {
     Map<String, List<String>> queryParams = new HashMap<>();
     queryParams.put("status", Arrays.asList(new String[] {"complete"}));
     when(ctx.queryParamMap()).thenReturn(queryParams);
+
     todoController.getTodos(ctx);
     verify(ctx).json(todoArrayCaptor.capture());
     for (Todo todo : todoArrayCaptor.getValue()) {
       assertEquals(true, todo.status);
     }
   }
-  
+}
+
   @Test
   @SuppressWarnings({ "MagicNumber" })
   public void canFilterTodosByOwner() throws IOException {

@@ -52,7 +52,7 @@ public class TodoController implements Controller {
     Todo[] todos = todoDatabase.listTodos(ctx.queryParamMap());
     ctx.json(todos);
   }
-  
+
   /**
    * @param server
    */
