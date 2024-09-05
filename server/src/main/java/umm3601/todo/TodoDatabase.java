@@ -38,6 +38,10 @@ public class TodoDatabase {
   public Todo[] listTodos(Map<String, List<String>> queryParamMap) {
     Todo[] filteredTodos = allTodos;
 
+    if (queryParamMap.containsKey("limit")) {
+      
+    }
+
     if (queryParamMap.containsKey("owner")) {
       String ownerParam = queryParamMap.get("owner").get(0);
       filteredTodos = filterTodosByOwner(filteredTodos, ownerParam);
@@ -70,6 +74,14 @@ public class TodoDatabase {
 
   public Todo[] filterTodosByCategory(Todo[] todos, String targetCategory) {
     return Arrays.stream(todos).filter(x -> x.category.equals(targetCategory)).toArray(Todo[]::new);
+  }
+
+  public Todo[] limitTodos(Todo[] todos, int n) {
+    Todo[] out = new Todo[n];
+    for(int i = 0; i < n; i++) {
+        out[i] = todos[i];
+    }
+    return out;
   }
 
 }
