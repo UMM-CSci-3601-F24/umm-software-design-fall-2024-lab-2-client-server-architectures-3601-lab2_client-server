@@ -128,4 +128,18 @@ public class TodoControllerSpec {
     }
     assertEquals(61, todoArrayCaptor.getValue().length);
    }
+
+   public void canFilterTodosByBody() throws IOException {
+    Map<String, List<String>> queryParams = new HashMap<>();
+    queryParams.put("owner", Arrays.asList(new String[] {"laborum"}));
+    when(ctx.queryParamMap()).thenReturn(queryParams);
+
+    todoController.getTodos(ctx);
+
+    verify(ctx).json(todoArrayCaptor.capture());
+    for (Todo todo : todoArrayCaptor.getValue()) {
+      assertEquals("laborum", todo.owner);
+    }
+    assertEquals(61, todoArrayCaptor.getValue().length);
+   }
 }
