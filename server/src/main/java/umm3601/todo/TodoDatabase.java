@@ -104,7 +104,7 @@ public class TodoDatabase {
   public Todo[] filterTodosByBody(Todo[] todos, String targetString) {
     return Arrays.stream(todos).filter(x -> x.body.contains(targetString)).toArray(Todo[]::new);
   }
-  
+
   public Todo[] orderByOwner() {
     List<Todo> todos = Arrays.asList(allTodos);
     todos.sort(Comparator.comparing(t -> t.owner));
