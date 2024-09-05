@@ -154,4 +154,19 @@ public class TodoControllerSpec {
       }
       assertEquals(80, todoArrayCaptor.getValue().length);
     }
+
+    @Test
+    @SuppressWarnings({ "MagicNumber" })
+    public void canLimitTodos() {
+      Map<String, List<String>> queryParams = new HashMap<>();
+      queryParams.put("limit", Arrays.asList(new String[] {"10"}));
+      when(ctx.queryParamMap()).thenReturn(queryParams);
+
+      todoController.getTodos(ctx);
+
+      verify(ctx).json(todoArrayCaptor.capture());
+      assertEquals(10, todoArrayCaptor.getValue().length);
+
+
+    }
 }
