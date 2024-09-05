@@ -36,6 +36,10 @@ public class TodoDatabase {
     return Arrays.stream(allTodos).filter(x -> x._id.equals(id)).findFirst().orElse(null);
   }
 
+  public Todo[] getAllTodosArray() {  // This is for testing purposes
+    return allTodos;
+  }
+
   public Todo[] listTodos(Map<String, List<String>> queryParamMap) {
     Todo[] filteredTodos = allTodos;
 
