@@ -327,6 +327,10 @@ _why_ we'd want to have it.
   - [ ] :question: The page `api/users/588935f5de613130e931ffd5`
     - <http://localhost:4567/api/users/588935f5de613130e931ffd5>
 
+<http://localhost:4567/todos>
+<http://localhost:4567/todos/58895985c1849992336c219b>
+<http://localhost:4567/api/todos>
+
 :bangbang: If you have your project running (see the README), these links should
 actually work and generate results from your server.
 

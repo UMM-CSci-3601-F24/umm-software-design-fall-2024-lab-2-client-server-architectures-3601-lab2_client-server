@@ -33,33 +33,65 @@ public class TodoDatabase {
   public Todo getTodo(String id) {
     return Arrays.stream(allTodos).filter(x -> x._id.equals(id)).findFirst().orElse(null);
   }
+
+
   public Todo[] listTodos(Map<String, List<String>> queryParams) {
 Todo[] filteredTodos = allTodos;
 
-
-    if (queryParams.containsKey("age")) {
-      String ageParam = queryParams.get("age").get(0);
+// filter by owner
+    if (queryParams.containsKey("owner")) {
+      String ownerParam = queryParams.get("owner").get(0);
       try {
         String targetOwner = queryParams.get("owner").get(0);
         filteredTodos = filterTodosByOwner(targetOwner);
       } catch (NumberFormatException e) {
-        throw new BadRequestResponse("Specified age '" + ageParam + "' can't be parsed to an integer");
+        throw new BadRequestResponse("Specified owner '" + ownerParam + "' can't be parsed to an string");
       }
+
+
     }
 
-    // if (queryParams.containsKey("Body")) {
-    //   String targetBody = queryParams.get("Body").get(0);
-    //   filteredTodos = filterTodosByBody(filteredTodos, targetBody);
-    // }
+// filter by body
+    if (queryParams.containsKey("contains")) {
+      String targetBody = queryParams.get("contains").get(0);
+      filteredTodos = filterTodosByBody(targetBody);
+    }
+
+// filter by category
+
+    if (queryParams.containsKey("category")) {
+      String targetCategory = queryParams.get("category").get(0);
+      filteredTodos = filterTodosByCategory(targetCategory);
+    }
+
+// filter by status
+
+    if (queryParams.containsKey("status")) {
+      Boolean targetStatus = queryParams.get("status").get(0).equals("complete");
+      filteredTodos = filterTodosByStatus(targetStatus);
+    }
 
 
     return filteredTodos;
   }
+
+
+
   public Todo[] filterTodosByOwner(String targetOwner) {
-    return Arrays.stream(allTodos).filter(x -> x.owner == targetOwner).toArray(Todo[]::new);
+    return Arrays.stream(allTodos).filter(x -> x.owner.equals(targetOwner)).toArray(Todo[]::new);
   }
 
+  public Todo[] filterTodosByStatus(Boolean targetStatus) {
+    return Arrays.stream(allTodos).filter(x -> x.status == targetStatus).toArray(Todo[]::new);
+  }
 
+  public Todo[] filterTodosByBody(String targetBody) {
+    return Arrays.stream(allTodos).filter(x -> x.body.contains(targetBody)).toArray(Todo[]::new);
+  }
+
+  public Todo[] filterTodosByCategory(String targetCategory) {
+    return Arrays.stream(allTodos).filter(x -> x.category.equals(targetCategory)).toArray(Todo[]::new);
+  }
 
 }
 

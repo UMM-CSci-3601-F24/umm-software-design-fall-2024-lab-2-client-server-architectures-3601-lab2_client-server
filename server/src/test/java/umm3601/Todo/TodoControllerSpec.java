@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// import org.jetbrains.annotations.TestOnly;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,10 +22,10 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import io.javalin.Javalin;
-import io.javalin.http.BadRequestResponse;
+// import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
-import io.javalin.http.NotFoundResponse;
+// import io.javalin.http.NotFoundResponse;
 import umm3601.Main;
 
 
@@ -38,7 +39,7 @@ public class TodoControllerSpec {
   private Context ctx;
 
   @Captor
-  private ArgumentCaptor<Todo[]> userArrayCaptor;
+  private ArgumentCaptor<Todo[]> todoArrayCaptor;
 
   @BeforeEach
   public void setUp() throws IOException {
@@ -59,7 +60,7 @@ public class TodoControllerSpec {
 @Test
 public void buildControllerFailsWithIllegalDbFile() {
   Assertions.assertThrows(IOException.class, () -> {
-    todoController.buildUserController("this is not a legal file name");
+    TodoController.buildTodoController("this is not a legal file name");
   });
 }
 
@@ -72,11 +73,11 @@ public void buildControllerFailsWithIllegalDbFile() {
   }
 
   @Test
-  public void canGetCertainID() throws IOException {
-    String id = "58895985f0a4bbea24084ab";
-    Todo todo = db.getTodo(id);
+  public void canGetCertain_IDTodo() throws IOException {
+    String _id = "58895985f0a4bbea24084abf";
+    Todo todo = db.getTodo(_id);
 
-    when(ctx.pathParam("id")).thenReturn(id);
+    when(ctx.pathParam("id")).thenReturn(_id);
 
     todoController.getTodo(ctx);
 
@@ -84,6 +85,42 @@ public void buildControllerFailsWithIllegalDbFile() {
     verify(ctx).status(HttpStatus.OK);
 }
 
+@Test
+public void canGetTodosWithOwner() throws IOException {
+  Map<String, List<String>> queryParams = new HashMap<>();
+  queryParams.put("owner", Arrays.asList(new String[] {"Blanche"}));
+  when(ctx.queryParamMap()).thenReturn(queryParams);
+
+  todoController.getTodos(ctx);
+
+  // Confirm that all the users passed to `json` work for OHMNET.
+  verify(ctx).json(todoArrayCaptor.capture());
+  for (Todo todo : todoArrayCaptor.getValue()) {
+    assertEquals("Blanche", todo.owner);
+  }
+}
 
 
+
+
+// @Test
+// public void canGetTodoByStatus() throws IOException {
+//   Boolean status = true;
+//   Todo todo = db.getTodo(status);
+
+//   when(ctx.pathParam("status")).theReturn(status);
+
+//   todoController.getTodo(ctx);
+
+//   verify(ctx).json(todo);
+//   verify(ctx).status(HttpStatus.OK);
+// }
+
+
+// @Test
+// public void canGetTodoByBody() throws IOException {
+
+
+
+// }
 }
