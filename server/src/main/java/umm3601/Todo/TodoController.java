@@ -9,10 +9,10 @@ import umm3601.Controller;
 
 public class TodoController implements Controller {
 
-  private TodoDatabase todoDatabase;
+  private TodoDatabase TodoDatabase;
 
   public TodoController(TodoDatabase todoDatabase) {
-    this.todoDatabase = todoDatabase;
+    this.TodoDatabase = todoDatabase;
   }
 
   public static TodoController buildTodoController(String todoDataFile) throws IOException {
@@ -24,6 +24,16 @@ public class TodoController implements Controller {
     return todoController;
   }
 
+  public void getTodo(Context ctx) {
+    String id = ctx.pathParam("id");
+    Todo todo = TodoDatabase.getTodo(id);
+    if (todo != null) {
+      ctx.json(todo);
+      ctx.status(HttpStatus.OK);
+    } else {
+      throw new NotFoundResponse("No user with id " + id + " was found.");
+    }
+  }
 
   public void getTodos(Context ctx) {
     Todo[] todos = TodoDatabase.listTodos(ctx.queryParamMap());

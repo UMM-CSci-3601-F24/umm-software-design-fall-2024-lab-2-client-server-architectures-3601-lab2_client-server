@@ -73,11 +73,15 @@ public void buildControllerFailsWithIllegalDbFile() {
 
   @Test
   public void canGetCertainID() throws IOException {
+    String id = "58895985f0a4bbea24084ab";
+    Todo todo = db.getTodo(id);
 
+    when(ctx.pathParam("id")).thenReturn(id);
 
+    todoController.getTodo(ctx);
 
-
-
+    verify(ctx).json(todo);
+    verify(ctx).status(HttpStatus.OK);
 }
 
 

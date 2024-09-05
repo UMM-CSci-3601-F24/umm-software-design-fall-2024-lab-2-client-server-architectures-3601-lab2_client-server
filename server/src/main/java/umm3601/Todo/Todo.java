@@ -11,8 +11,8 @@ public class Todo {
   public String category;
 
   @Override
-  public String toString() {
-    return owner;
+  public String toString(){
+    return category;
   }
 }
 

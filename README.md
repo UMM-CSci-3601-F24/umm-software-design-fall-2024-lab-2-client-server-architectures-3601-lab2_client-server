@@ -189,7 +189,7 @@ code coverage after major stories are finished and look for areas that you're no
 as you introduce your `todo` code.
 
 :bangbang: `./gradlew check` will fail (and thus block your ability to
-merge in a pull request)) if your test coverage ever falls below 80%,
+merge in a pull request) if your test coverage ever falls below 80%,
 so keep an eye on it and take action if it starts to slide down.
 
 :pushpin: The `Main.java` and `Server.java` files are excluded from
