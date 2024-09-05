@@ -52,9 +52,9 @@ public class TodoDatabase {
       }
     }
 
-    if (queryParamMap.containsKey("body")) {
-      String ownerParam = queryParamMap.get("body").get(0);
-      filteredTodos = filterTodosByOwner(filteredTodos, ownerParam);
+    if (queryParamMap.containsKey("contains")) {
+      String bodyParam = queryParamMap.get("contains").get(0);
+      filteredTodos = filterTodosByBody(filteredTodos, bodyParam);
     }
     return filteredTodos;
   }
@@ -71,7 +71,7 @@ public class TodoDatabase {
     return Arrays.stream(todos).filter(x -> x.category.equals(targetCategory)).toArray(Todo[]::new);
   }
 
-  public Todo[] filterTodosByBody(Todo[] todos, String targetBody) {
-    return Arrays.stream(todos).filter(x -> x.category.equals(targetBody)).toArray(Todo[]::new);
+  public Todo[] filterTodosByBody(Todo[] todos, String targetString) {
+    return Arrays.stream(todos).filter(x -> x.body.contains(targetString)).toArray(Todo[]::new);
   }
 }

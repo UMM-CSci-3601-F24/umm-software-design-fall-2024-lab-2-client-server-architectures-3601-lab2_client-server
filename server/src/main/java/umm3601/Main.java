@@ -3,6 +3,8 @@ package umm3601;
 import java.io.IOException;
 
 import umm3601.user.UserController;
+import umm3601.todo.TodoController;
+
 
 public class Main {
   public static final String USER_DATA_FILE = "/users.json";
@@ -37,7 +39,9 @@ public class Main {
       // You would add additional controllers here, as you create them,
       // although you need to make sure that each of your new controllers implements
       // the `Controller` interface.
-      UserController.buildUserController(USER_DATA_FILE)
+      UserController.buildUserController(USER_DATA_FILE),
+      TodoController.buildTodoController(TODO_DATA_FILE)
+
     };
     return controllers;
   }

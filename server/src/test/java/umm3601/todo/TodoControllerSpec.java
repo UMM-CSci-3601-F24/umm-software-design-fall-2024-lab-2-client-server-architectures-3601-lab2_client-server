@@ -8,7 +8,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -129,17 +129,19 @@ public class TodoControllerSpec {
     assertEquals(61, todoArrayCaptor.getValue().length);
    }
 
+   @Test
+   @SuppressWarnings({ "MagicNumber" })
    public void canFilterTodosByBody() throws IOException {
-    Map<String, List<String>> queryParams = new HashMap<>();
-    queryParams.put("owner", Arrays.asList(new String[] {"laborum"}));
-    when(ctx.queryParamMap()).thenReturn(queryParams);
+      Map<String, List<String>> queryParams = new HashMap<>();
+      queryParams.put("contains", Arrays.asList(new String[] {"laborum"}));
+      when(ctx.queryParamMap()).thenReturn(queryParams);
 
-    todoController.getTodos(ctx);
+      todoController.getTodos(ctx);
 
-    verify(ctx).json(todoArrayCaptor.capture());
-    for (Todo todo : todoArrayCaptor.getValue()) {
-      assertEquals("laborum", todo.owner);
+      verify(ctx).json(todoArrayCaptor.capture());
+      for (Todo todo : todoArrayCaptor.getValue()) {
+          assertTrue(todo.body.contains("laborum"));
+      }
+      assertEquals(80, todoArrayCaptor.getValue().length);
     }
-    assertEquals(61, todoArrayCaptor.getValue().length);
-   }
 }
