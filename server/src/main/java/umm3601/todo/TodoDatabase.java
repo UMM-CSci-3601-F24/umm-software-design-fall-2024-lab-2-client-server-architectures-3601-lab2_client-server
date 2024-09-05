@@ -62,6 +62,10 @@ public class TodoDatabase {
       }
     }
 
+    if (queryParamMap.containsKey("contains")) {
+      String bodyParam = queryParamMap.get("contains").get(0);
+      filteredTodos = filterTodosByBody(filteredTodos, bodyParam);
+    }
     if (queryParamMap.containsKey("orderBy")) {
       String orderParam = queryParamMap.get("orderBy").get(0);
 
@@ -97,6 +101,10 @@ public class TodoDatabase {
     return Arrays.stream(todos).filter(x -> x.category.equals(targetCategory)).toArray(Todo[]::new);
   }
 
+  public Todo[] filterTodosByBody(Todo[] todos, String targetString) {
+    return Arrays.stream(todos).filter(x -> x.body.contains(targetString)).toArray(Todo[]::new);
+  }
+  
   public Todo[] orderByOwner() {
     List<Todo> todos = Arrays.asList(allTodos);
     todos.sort(Comparator.comparing(t -> t.owner));
