@@ -22,7 +22,7 @@ public class UserController implements Controller {
    * internally so that (subsets of) users can be returned in response to
    * requests.
    *
-   * @param database the `Database` containing user data
+   *@param database the `Database` containing user data
    */
   public UserController(UserDatabase userDatabase) {
     this.userDatabase = userDatabase;
@@ -49,7 +49,7 @@ public class UserController implements Controller {
 
   /**
    * Get the single user specified by the `id` parameter in the request.
-   *
+   *todo
    * @param ctx a Javalin HTTP context
    */
   public void getUser(Context ctx) {

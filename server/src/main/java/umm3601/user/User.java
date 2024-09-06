@@ -11,7 +11,7 @@ package umm3601.user;
 // Normally you'd want all fields to be private, but
 // we need the fields in this class to be public since
 // they will be written to by the Jackson library. We
-// need to suppress the Visibility Modifier
+// need to suppress the Visibility Modifier todo
 // (https://checkstyle.sourceforge.io/config_design.html#VisibilityModifier)
 // check in CheckStyle so that we don't get a failed
 // build when Gradle runs CheckStyle.
