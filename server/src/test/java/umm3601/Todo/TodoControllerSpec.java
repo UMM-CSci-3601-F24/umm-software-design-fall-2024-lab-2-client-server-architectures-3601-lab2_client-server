@@ -1,6 +1,7 @@
 package umm3601.Todo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -103,24 +104,54 @@ public void canGetTodosWithOwner() throws IOException {
 
 
 
-// @Test
-// public void canGetTodoByStatus() throws IOException {
-//   Boolean status = true;
-//   Todo todo = db.getTodo(status);
+@Test
+public void canGetTodoByIncomplete() throws IOException {
+  Map<String, List<String>> queryParams = new HashMap<>();
+  queryParams.put("status", Arrays.asList(new String[] {"incomplete"}));
+  when(ctx.queryParamMap()).thenReturn(queryParams);
 
-//   when(ctx.pathParam("status")).theReturn(status);
+  todoController.getTodos(ctx);
 
-//   todoController.getTodo(ctx);
+  verify(ctx).json(todoArrayCaptor.capture());
+  for (Todo todo : todoArrayCaptor.getValue()) {
+    assertEquals(false, todo.status);
+  }
+}
 
-//   verify(ctx).json(todo);
-//   verify(ctx).status(HttpStatus.OK);
-// }
+@Test
+public void canGetTodoByComplete() throws IOException {
+  Map<String, List<String>> queryParams = new HashMap<>();
+  queryParams.put("status", Arrays.asList(new String[] {"complete"}));
+  when(ctx.queryParamMap()).thenReturn(queryParams);
 
+  todoController.getTodos(ctx);
 
-// @Test
-// public void canGetTodoByBody() throws IOException {
+  verify(ctx).json(todoArrayCaptor.capture());
+  for (Todo todo : todoArrayCaptor.getValue()) {
+    assertEquals(true, todo.status);
+  }
+}
 
+@Test
+public void canGetTodosByBody() throws IOException {
+  Map<String, List<String>> queryParams = new HashMap<>();
+  queryParams.put("contains", Arrays.asList(new String[] {"tempor"}));
+  when(ctx.queryParamMap()).thenReturn(queryParams);
+  todoController.getTodos(ctx);
+  verify(ctx).json(todoArrayCaptor.capture());
+  for (Todo todo : todoArrayCaptor.getValue()) {
+    assertTrue(todo.body.contains("tempor"), "Body <" + todo.body + "> didn't contain 'tempor'.");
+  }
+}
 
+@Test
+public void ableToLimitByFive() throws IOException {
+  Map<String, List<String>> queryParams = new HashMap<>();
+  queryParams.put("limit", Arrays.asList(new String[] {"5"}));
+  when(ctx.queryParamMap()).thenReturn(queryParams);
+  todoController.getTodos(ctx);
+  verify(ctx).json(todoArrayCaptor.capture());
+  assertEquals(5, todoArrayCaptor.getValue().length);
+}
 
-// }
 }

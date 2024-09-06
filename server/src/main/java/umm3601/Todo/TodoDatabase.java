@@ -71,6 +71,11 @@ Todo[] filteredTodos = allTodos;
       filteredTodos = filterTodosByStatus(targetStatus);
     }
 
+    if(queryParams.containsKey("limit")) {
+      int limit = Integer.valueOf(queryParams.get("limit").get(0));
+      filteredTodos = filterTodosWithLimit(limit);
+    }
+
 
     return filteredTodos;
   }
@@ -91,6 +96,15 @@ Todo[] filteredTodos = allTodos;
 
   public Todo[] filterTodosByCategory(String targetCategory) {
     return Arrays.stream(allTodos).filter(x -> x.category.equals(targetCategory)).toArray(Todo[]::new);
+  }
+
+  public Todo[] filterTodosWithLimit(int limit) {
+    limit = Math.min(allTodos.length, limit);
+    Todo[] temp = new Todo[limit];
+      for (int i = 0; i < limit; i++) {
+        temp[i] = allTodos[i];
+      }
+    return temp;
   }
 
 }
