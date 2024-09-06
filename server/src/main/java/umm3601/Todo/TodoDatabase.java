@@ -71,7 +71,7 @@ Todo[] filteredTodos = allTodos;
       filteredTodos = filterTodosByStatus(targetStatus);
     }
 
-    if(queryParams.containsKey("limit")) {
+    if (queryParams.containsKey("limit")) {
       int limit = Integer.valueOf(queryParams.get("limit").get(0));
       filteredTodos = filterTodosWithLimit(limit);
     }

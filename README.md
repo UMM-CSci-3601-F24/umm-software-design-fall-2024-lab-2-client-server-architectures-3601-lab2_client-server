@@ -174,7 +174,7 @@ so you can see how well your tests cover (i.e., exercise) your code. The command
 
 will run the tests followed by the test coverage report generator. This report is a "website" like the one from JUnit above. To see the report open the file in your browser:
 
-```text
+```text 
 server/build/jacocoHtml/index.html
 ```
 

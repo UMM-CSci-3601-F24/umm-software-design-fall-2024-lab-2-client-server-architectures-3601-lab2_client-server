@@ -74,11 +74,11 @@ public void buildControllerFailsWithIllegalDbFile() {
   }
 
   @Test
-  public void canGetCertain_IDTodo() throws IOException {
-    String _id = "58895985f0a4bbea24084abf";
-    Todo todo = db.getTodo(_id);
+  public void canGetCertainIDTodo() throws IOException {
+    String id = "58895985f0a4bbea24084abf";
+    Todo todo = db.getTodo(id);
 
-    when(ctx.pathParam("id")).thenReturn(_id);
+    when(ctx.pathParam("id")).thenReturn(id);
 
     todoController.getTodo(ctx);
 
